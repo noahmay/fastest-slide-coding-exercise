@@ -51,5 +51,10 @@ class TestFastestSlideUsingIncludedExamples(unittest.TestCase):
         with self.assertRaises(Exception):
             pyramid.addLayer([])
 
+    def test_with_only_one_layer(self):
+        pyramid = Pyramid()
+        pyramid.addLayer([1])
+        self.assertEqual(pyramid.getFastestSlide(), 1)
+
 if __name__ == '__main__':
     unittest.main()

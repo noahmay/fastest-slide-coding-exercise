@@ -30,25 +30,15 @@ class Pyramid:
         if(len(self.layers) == 0):
             raise Exception("No layers to remove")
         return self.layers.pop()
-
-    def getChildren(self, layer_index, number_index):
-        if(number_index > len(self.layers[layer_index])-1):
-            raise Exception("Number index is greater than the number of numbers in the layer")
-        if(layer_index > len(self.layers)-1):
-            raise Exception("Layer index is greater than the number of layers")
-
-        childLayer = self.layers[layer_index+1]
-        return [childLayer[number_index], childLayer[number_index + 1]]
         
     def getFastestSlide(self):
         layers_copy = self.layers.copy()
-        
         #start for second to layer and go backwards
         for layer_index in range(len(layers_copy)-2, -1, -1):
             current_layer = layers_copy[layer_index]
+            last_layer = layers_copy[layer_index+1]
+           
             for number_index in range(len(current_layer)):
-                  current_layer[number_index] += min(self.getChildren(layer_index, number_index))
+                current_layer[number_index] += min(last_layer[number_index], last_layer[number_index + 1])
+
         return layers_copy[0][0]
-
-                
-
