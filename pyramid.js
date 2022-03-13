@@ -45,20 +45,20 @@ module.exports = class Pyramid {
             return this.pyramidLayers[0][0];
         }
 
-        //For each layer, take the minimum of every number's children and add it to itself until at the top of the pyramid
-        const reduced = this.pyramidLayers.reduceRight((lastLayer, item, index) => {
+        //For each layer, take the minimum of every numbers children and add it to itself until at the top of the pyramid
+        const reduced = this.pyramidLayers.reduceRight((lastLayer, currentLayer, index) => {
 
             //Skip the last row of the pyramid
             if (index === this.pyramidLayers.length - 1)
                 return lastLayer;
 
-
-            return item.map((number, numberIndex) => {
-                return number + Math.min(lastLayer[numberIndex], lastLayer[numberIndex + 1])
+            return currentLayer.map((number, numberIndex) => {
+                const leftChild = lastLayer[numberIndex]
+                const rightChild = lastLayer[numberIndex + 1];
+                return number + Math.min(leftChild, rightChild)
             })
-        }, this.pyramidLayers[this.pyramidLayers.length - 1]);
+        });
 
         return reduced[0];
     }
-
 }
